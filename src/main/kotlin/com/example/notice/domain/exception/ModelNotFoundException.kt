@@ -1,4 +1,4 @@
-package com.example.notice.domain.exception.GlobalExceptionHandler
+package com.example.notice.domain.exception
 
-class ModelNotFoundException {
-}
+data class ModelNotFoundException(val modelName: String, val id: Long?) :
+    RuntimeException("Model $modelName not found with given id: $id")
