@@ -1,3 +1,6 @@
 package com.example.notice.domain.post.model
 
-data class PostStatusEntity()
+enum class PostStatusEntity {
+    COMPLETE,
+    UNCOMPLETE
+}
