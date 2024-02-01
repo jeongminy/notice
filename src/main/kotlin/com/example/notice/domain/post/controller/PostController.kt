@@ -21,7 +21,7 @@ class PostController(
     private val postService: PostService,
 ) {
 
-    @Operation(summary = "글 목록 조회")
+    @Operation(summary = "글 전체 조회")
     @GetMapping
     fun getPosts(): ResponseEntity<List<PostResponse>> {
         return ResponseEntity

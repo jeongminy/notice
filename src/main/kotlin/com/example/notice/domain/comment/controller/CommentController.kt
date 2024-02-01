@@ -19,6 +19,14 @@ class CommentController(
     private val commentService: CommentService,
 ) {
 
+    @Operation(summary = "댓글 전체 조회")
+    @GetMapping
+    fun getComments():ResponseEntity<List<CommentResponse>>{
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(commentService.getComments())
+    }
+
     @Operation(summary = "댓글 생성")
     @PostMapping
     fun addComment(

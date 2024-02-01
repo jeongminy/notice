@@ -35,6 +35,7 @@ class CommentEntity (
 
 fun CommentEntity.toResponse(): CommentResponse{
     return CommentResponse(
+        id = id!!,
         nickname = user.profile.nickname,
         comment = comment,
         )
