@@ -10,13 +10,6 @@ import java.time.LocalDateTime
 @Table(name = "post")
 class PostEntity (
 
-    @OneToMany(mappedBy = "post", cascade = [CascadeType.ALL])
-    var comments: MutableList<CommentEntity> = mutableListOf(),
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    var user: UserEntity,
-
     @Column(name = "title", nullable = false)
     var title: String,
 
@@ -24,12 +17,19 @@ class PostEntity (
     var description: String,
 
     @Column(name = "status", nullable = false)
-    var status: PostStatusEntity,
+    var status: PostStatus,
 
     @Column(name = "post_image_url", nullable = false)
-    var postImageUrl: String = "https://imgur.com/a/tBAKHUn",
+    var postImageUrl: String,
 
-){
+    @OneToMany(mappedBy = "post", cascade = [CascadeType.ALL])
+    var comments: MutableList<CommentEntity> = mutableListOf(),
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    var user: UserEntity
+
+    ){
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
@@ -39,5 +39,16 @@ class PostEntity (
 
     @Column(name = "updated_at")
     var updatedAt: LocalDateTime? = null
+}
+
+fun PostEntity.toResponse(): PostResponse {
+    return PostResponse(
+        id = id!!,
+        nickname = user.profile.nickname,
+        title = title,
+        description = description,
+        status = status,
+        postImageUrl = postImageUrl,
+    )
 }
 
