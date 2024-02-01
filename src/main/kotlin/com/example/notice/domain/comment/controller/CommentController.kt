@@ -37,4 +37,14 @@ class CommentController(
             .status(HttpStatus.OK)
             .body(commentService.updateComment(postId, commentId, updateCommentRequest, userPrincipal))
     }
+
+    @DeleteMapping("/{commentId}")
+    fun deleteComment(
+        @PathVariable postId: Long, commentId: Long,
+        @AuthenticationPrincipal userPrincipal: UserPrincipal,
+    ): ResponseEntity<Unit>{
+        return ResponseEntity
+            .status(HttpStatus.NO_CONTENT)
+            .body(commentService.deleteComment(postId,commentId,userPrincipal))
+    }
 }

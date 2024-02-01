@@ -52,4 +52,12 @@ class CommentServiceImpl(
 
         return comment.toResponse()
     }
+
+    override fun deleteComment(postId: Long, commentId: Long, userPrincipal: UserPrincipal) {
+        val post = postRepository.findByIdOrNull(postId) ?: throw ModelNotFoundException("Post", postId)
+        val user = userRepository.findByIdOrNull(userPrincipal.id) ?: throw ModelNotFoundException("UserEntity", userPrincipal.id)
+        val comment: CommentEntity = commentRepository.findByIdOrNull(commentId) ?: throw ModelNotFoundException("CommentEntity", commentId)
+
+        commentRepository.delete(comment)
+    }
 }
