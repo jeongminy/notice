@@ -31,6 +31,12 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0") //swager
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa") //jpa
+	implementation("org.springframework.boot:spring-boot-starter-aop") //Spring AOP
+	implementation("org.springframework.boot:spring-boot-starter-security") //Spring Security
+	implementation("io.jsonwebtoken:jjwt-api:0.12.3") //JWT
+
+	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.3") //JWT
+	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.3") //JWT
 	runtimeOnly("org.postgresql:postgresql") //postgresql
 
 
