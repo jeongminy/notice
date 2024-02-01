@@ -7,6 +7,7 @@ import com.example.notice.domain.user.dto.response.UserResponse
 import com.example.notice.domain.user.service.UserService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
+import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
@@ -37,7 +38,7 @@ class UserController(
     @PreAuthorize("isAnonymous()")
     @PostMapping("/join")
     fun join(
-        @RequestBody signUpRequest: JoinRequest
+        @Valid @RequestBody signUpRequest: JoinRequest
     ): ResponseEntity<UserResponse> {
         return ResponseEntity
             .status(HttpStatus.OK)

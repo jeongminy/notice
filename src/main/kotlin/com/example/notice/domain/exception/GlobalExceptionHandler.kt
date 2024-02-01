@@ -21,8 +21,8 @@ class GlobalExceptionHandler {
             .body(ErrorResponse(e.message))
     }
 
-    @ExceptionHandler(DuplicatedPropertyException::class)
-    fun handleDuplicatePropertyException(e: DuplicatedPropertyException): ResponseEntity<ErrorResponse> {
+    @ExceptionHandler(DuplicateValueException::class)
+    fun handleDuplicateValueException(e: DuplicateValueException): ResponseEntity<ErrorResponse> {
         return ResponseEntity.status(HttpStatus.CONFLICT)
             .body(ErrorResponse(e.message))
     }
