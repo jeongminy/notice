@@ -13,6 +13,7 @@ class UserEntity (
     @Column (name = "password", nullable = false)
     val password: String,
 
+    @Enumerated(EnumType.STRING)
     @Column (name = "role", nullable = false)
     val role: Role,
 

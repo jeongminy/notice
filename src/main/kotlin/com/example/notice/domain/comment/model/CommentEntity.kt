@@ -27,10 +27,10 @@ class CommentEntity (
     val id: Long? = null
 
     @Column(name = "created_at")
-    val createdAt: LocalDateTime? = null
+    val createdAt: LocalDateTime? = LocalDateTime.now()
 
     @Column(name = "updated_at")
-    var updatedAt: LocalDateTime? = null
+    var updatedAt: LocalDateTime? = LocalDateTime.now()
 }
 
 fun CommentEntity.toResponse(): CommentResponse{

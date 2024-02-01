@@ -1,9 +1,10 @@
 package com.example.notice.domain.post.service
 
-
+import com.example.notice.domain.comment.model.toResponse
 import com.example.notice.domain.exception.ModelNotFoundException
 import com.example.notice.domain.post.dto.request.AddPostRequest
 import com.example.notice.domain.post.dto.request.UpdatePostRequest
+import com.example.notice.domain.post.dto.response.PostDetailResponse
 import com.example.notice.domain.post.dto.response.PostResponse
 import com.example.notice.domain.post.model.PostEntity
 import com.example.notice.domain.post.model.PostStatus
@@ -26,13 +27,30 @@ class PostServiceImpl(
         return postRepository.findAll().map { it.toResponse() }
     }
 
-    override  fun getPostById(postId: Long): PostResponse {
-        val post = postRepository.findByIdOrNull(postId) ?: throw ModelNotFoundException("PostEntity", postId)
-        return post.toResponse()
+    override  fun getPostById(postId: Long): PostDetailResponse {
+        val post = postRepository.findByIdOrNull(postId)
+            ?: throw ModelNotFoundException("PostEntity", postId)
+
+        return PostDetailResponse(
+            id = post.id!!,
+            nickname = post.user.profile.nickname,
+            title = post.title,
+            description = post.description,
+            status = post.status,
+            postImageUrl = post.postImageUrl,
+            createdAt = post.createdAt!!,
+            updatedAt = post.updatedAt!!,
+            comments = post.comments.map { it.toResponse() }
+        )
     }
 
-    override fun addPost(request: AddPostRequest, userPrincipal: UserPrincipal): PostResponse {
-        val user = userRepository.findByIdOrNull(userPrincipal.id) ?: throw ModelNotFoundException("UserEntity", userPrincipal.id)
+    override fun addPost(
+        request: AddPostRequest,
+        userPrincipal: UserPrincipal
+    ): PostResponse {
+        val user = userRepository.findByIdOrNull(userPrincipal.id)
+            ?: throw ModelNotFoundException("UserEntity", userPrincipal.id)
+
         return postRepository.save(
             PostEntity(
                 title = request.title,
@@ -44,8 +62,13 @@ class PostServiceImpl(
         ).toResponse()
     }
 
-    override fun updatePost(postId: Long, request: UpdatePostRequest, userPrincipal: UserPrincipal): PostResponse {
-        val post = postRepository.findByIdOrNull(postId) ?: throw ModelNotFoundException("PostEntity", postId)
+    override fun updatePost(
+        postId: Long,
+        request: UpdatePostRequest,
+        userPrincipal: UserPrincipal
+    ): PostResponse {
+        val post = postRepository.findByIdOrNull(postId)
+            ?: throw ModelNotFoundException("PostEntity", postId)
 
             post.title = request.title
             post.description = request.description
@@ -56,8 +79,11 @@ class PostServiceImpl(
         return post.toResponse()
     }
 
-    override fun deletePost(postId: Long, userPrincipal: UserPrincipal) {
-        val post = postRepository.findByIdOrNull(postId) ?: throw ModelNotFoundException("PostEntity", postId)
+    override fun deletePost(
+        postId: Long,
+        userPrincipal: UserPrincipal) {
+        val post = postRepository.findByIdOrNull(postId)
+            ?: throw ModelNotFoundException("PostEntity", postId)
 
         postRepository.delete(post)
     }

@@ -5,7 +5,7 @@ import com.example.notice.domain.post.model.PostEntity
 import com.example.notice.domain.post.model.PostStatus
 import java.time.LocalDateTime
 
-data class PostResponse (
+data class PostDetailResponse (
     val id: Long,
     val nickname: String,
     val title: String,

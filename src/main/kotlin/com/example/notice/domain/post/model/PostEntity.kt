@@ -1,6 +1,7 @@
 package com.example.notice.domain.post.model
 
 import com.example.notice.domain.comment.model.CommentEntity
+import com.example.notice.domain.comment.model.toResponse
 import com.example.notice.domain.post.dto.response.PostResponse
 import com.example.notice.domain.user.model.UserEntity
 import jakarta.persistence.*
@@ -16,6 +17,7 @@ class PostEntity (
     @Column(name = "description", nullable = false)
     var description: String,
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     var status: PostStatus,
 
@@ -35,10 +37,10 @@ class PostEntity (
     var id: Long? = null
 
     @Column(name = "created_at")
-    val createdAt: LocalDateTime? = null
+    val createdAt: LocalDateTime? = LocalDateTime.now()
 
     @Column(name = "updated_at")
-    var updatedAt: LocalDateTime? = null
+    var updatedAt: LocalDateTime? = LocalDateTime.now()
 }
 
 fun PostEntity.toResponse(): PostResponse {
@@ -49,6 +51,7 @@ fun PostEntity.toResponse(): PostResponse {
         description = description,
         status = status,
         postImageUrl = postImageUrl,
+        comments = comments.map { it.toResponse() }
     )
 }
 
