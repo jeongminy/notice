@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 
@@ -27,6 +28,7 @@ class CommentController(
             .body(commentService.getComments())
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     @Operation(summary = "댓글 생성")
     @PostMapping
     fun addComment(
@@ -39,6 +41,7 @@ class CommentController(
             .body(commentService.addComment(postId, addCommentRequest, userPrincipal))
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     @Operation(summary = "댓글 수정")
     @PutMapping("/{commentId}")
     fun updateComment(
@@ -51,6 +54,7 @@ class CommentController(
             .body(commentService.updateComment(postId, commentId, updateCommentRequest, userPrincipal))
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     @Operation(summary = "댓글 삭제")
     @DeleteMapping("/{commentId}")
     fun deleteComment(

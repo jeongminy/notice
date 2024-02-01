@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 
@@ -39,6 +40,7 @@ class PostController(
             .body(postService.getPostById(postId))
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     @Operation(summary = "글 생성")
     @PostMapping
     fun addPost(
@@ -50,6 +52,7 @@ class PostController(
             .body(postService.addPost(addPostRequest, userPrincipal))
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     @Operation(summary = "글 수정")
     @PutMapping("/{postId}")
     fun updatePost(
@@ -62,6 +65,7 @@ class PostController(
             .body(postService.updatePost(postId, updatePostRequest, userPrincipal))
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     @Operation(summary = "글 삭제")
     @DeleteMapping("/{postId}")
     fun deletePost(

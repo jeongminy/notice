@@ -6,6 +6,7 @@ import com.example.notice.domain.comment.dto.response.CommentResponse
 import com.example.notice.domain.comment.model.CommentEntity
 import com.example.notice.domain.comment.model.toResponse
 import com.example.notice.domain.comment.repository.CommentRepository
+import com.example.notice.domain.exception.InvalidCredentialException
 import com.example.notice.domain.exception.ModelNotFoundException
 import com.example.notice.domain.post.dto.response.PostResponse
 import com.example.notice.domain.post.model.PostEntity
@@ -53,6 +54,10 @@ class CommentServiceImpl(
         val user:UserEntity = userRepository.findByIdOrNull(userPrincipal.id) ?: throw ModelNotFoundException("UserEntity", userPrincipal.id)
         val comment: CommentEntity = commentRepository.findByIdOrNull(commentId) ?: throw ModelNotFoundException("CommentEntity", commentId)
 
+        //ADMIN이거나 본인인 경우에만 삭제 가능하도록 확인
+        if ((userPrincipal.id != comment.user.id) && (userPrincipal.authorities.first().toString() == "ROLE_USER"))
+            throw InvalidCredentialException("본인의 글이 아니므로 권한이 없습니다.")
+
         comment.comment = request.comment
 
         return comment.toResponse()
@@ -62,6 +67,10 @@ class CommentServiceImpl(
         val post: PostEntity = postRepository.findByIdOrNull(postId) ?: throw ModelNotFoundException("Post", postId)
         val user:UserEntity = userRepository.findByIdOrNull(userPrincipal.id) ?: throw ModelNotFoundException("UserEntity", userPrincipal.id)
         val comment: CommentEntity = commentRepository.findByIdOrNull(commentId) ?: throw ModelNotFoundException("CommentEntity", commentId)
+
+        //ADMIN이거나 본인인 경우에만 삭제 가능하도록 확인
+        if ((userPrincipal.id != comment.user.id) && (userPrincipal.authorities.first().toString() == "ROLE_USER"))
+            throw InvalidCredentialException("본인의 글이 아니므로 권한이 없습니다.")
 
         commentRepository.delete(comment)
     }

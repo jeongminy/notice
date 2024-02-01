@@ -1,6 +1,7 @@
 package com.example.notice.domain.post.service
 
 import com.example.notice.domain.comment.model.toResponse
+import com.example.notice.domain.exception.InvalidCredentialException
 import com.example.notice.domain.exception.ModelNotFoundException
 import com.example.notice.domain.post.dto.request.AddPostRequest
 import com.example.notice.domain.post.dto.request.UpdatePostRequest
@@ -28,8 +29,7 @@ class PostServiceImpl(
     }
 
     override  fun getPostById(postId: Long): PostDetailResponse {
-        val post = postRepository.findByIdOrNull(postId)
-            ?: throw ModelNotFoundException("PostEntity", postId)
+        val post = postRepository.findByIdOrNull(postId) ?: throw ModelNotFoundException("PostEntity", postId)
 
         return PostDetailResponse(
             id = post.id!!,
@@ -48,8 +48,7 @@ class PostServiceImpl(
         request: AddPostRequest,
         userPrincipal: UserPrincipal
     ): PostResponse {
-        val user = userRepository.findByIdOrNull(userPrincipal.id)
-            ?: throw ModelNotFoundException("UserEntity", userPrincipal.id)
+        val user = userRepository.findByIdOrNull(userPrincipal.id) ?: throw ModelNotFoundException("UserEntity", userPrincipal.id)
 
         return postRepository.save(
             PostEntity(
@@ -70,6 +69,10 @@ class PostServiceImpl(
         val post = postRepository.findByIdOrNull(postId)
             ?: throw ModelNotFoundException("PostEntity", postId)
 
+        //ADMIN이거나 본인인 경우에만 삭제 가능하도록 확인
+        if ((userPrincipal.id != post.user.id) && (userPrincipal.authorities.first().toString() == "ROLE_USER"))
+            throw InvalidCredentialException("본인의 글이 아니므로 권한이 없습니다.")
+
             post.title = request.title
             post.description = request.description
             post.status = request.status
@@ -84,6 +87,10 @@ class PostServiceImpl(
         userPrincipal: UserPrincipal) {
         val post = postRepository.findByIdOrNull(postId)
             ?: throw ModelNotFoundException("PostEntity", postId)
+
+        //ADMIN이거나 본인인 경우에만 삭제 가능하도록 확인
+        if ((userPrincipal.id != post.user.id) && (userPrincipal.authorities.first().toString() == "ROLE_USER"))
+            throw InvalidCredentialException("본인의 글이 아니므로 권한이 없습니다.")
 
         postRepository.delete(post)
     }
