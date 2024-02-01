@@ -6,17 +6,17 @@ import jakarta.persistence.*
 @Table(name = "app_user")
 class UserEntity (
 
-    @Column (name = "email")
+    @Column (name = "email", nullable = false)
     val email: String,
 
-    @Column (name = "password")
+    @Column (name = "password", nullable = false)
     val password: String,
 
-    @Column (name = "nickname")
-    val nickname: String,
+    @Column (name = "role", nullable = false)
+    val role: Role,
 
-    @Column (name = "role")
-    val role: RoleEntity
+    @Embedded
+    var profile: Profile
 
 ){
     @Id

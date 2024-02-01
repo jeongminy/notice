@@ -1,6 +1,6 @@
 package com.example.notice.domain.user.model
 
-enum class RoleEntity {
+enum class Role {
     ADMIN,
     USER
 }
