@@ -1,8 +1,10 @@
 package com.example.notice.domain.post.service
 
-import com.example.notice.domain.post.dto.AddPostRequest
-import com.example.notice.domain.post.dto.PostResponse
+import com.example.notice.domain.post.dto.request.AddPostRequest
+import com.example.notice.domain.post.dto.request.UpdatePostRequest
+import com.example.notice.domain.post.dto.response.PostResponse
 import com.example.notice.infra.security.UserPrincipal
+import org.springframework.http.ResponseEntity
 
 interface PostService {
 
@@ -11,4 +13,8 @@ interface PostService {
     fun getPostById(postId: Long): PostResponse
 
     fun addPost(addPostRequest: AddPostRequest, userPrincipal: UserPrincipal): PostResponse
+
+    fun updatePost(postId: Long, updatePostRequest: UpdatePostRequest, userPrincipal: UserPrincipal): PostResponse
+
+    fun deletePost(postId: Long, userPrincipal: UserPrincipal)
 }

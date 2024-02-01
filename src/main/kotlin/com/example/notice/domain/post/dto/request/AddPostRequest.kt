@@ -1,4 +1,4 @@
-package com.example.notice.domain.post.dto
+package com.example.notice.domain.post.dto.request
 
 data class AddPostRequest(
     val title: String,

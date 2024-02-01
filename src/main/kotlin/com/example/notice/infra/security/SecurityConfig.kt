@@ -17,8 +17,17 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 class SecurityConfig(
     private val jwtAuthenticationFilter: JwtAuthenticationFilter,
     private val authenticationEntryPoint: AuthenticationEntryPoint,
-    private val accessDeniedHandler: AccessDeniedHandler,
+    private val accessDeniedHandler: AccessDeniedHandler
 ) {
+
+    private val allowedUrls = arrayOf(
+        "/", "/swagger-ui/**", "/v3/**",
+        "/api/**"
+    )
+
+    private val anonymousUrls = arrayOf(
+        "/api/users/signup", "/api/users/login",
+    )
 
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
@@ -27,12 +36,8 @@ class SecurityConfig(
             .formLogin { it.disable() }
             .csrf { it.disable() }
             .authorizeHttpRequests {
-                it.requestMatchers(
-                    "/login",
-                    "/signup",
-                    "/swagger-ui/**",
-                    "/v3/api-docs/**"
-                ).permitAll()
+                it.requestMatchers(*allowedUrls).permitAll()
+                    .requestMatchers(*anonymousUrls).anonymous()
                     .anyRequest().authenticated()
             }
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)

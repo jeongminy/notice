@@ -1,7 +1,7 @@
 package com.example.notice.domain.post.model
 
 import com.example.notice.domain.comment.model.CommentEntity
-import com.example.notice.domain.post.dto.PostResponse
+import com.example.notice.domain.post.dto.response.PostResponse
 import com.example.notice.domain.user.model.UserEntity
 import jakarta.persistence.*
 import java.time.LocalDateTime

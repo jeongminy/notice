@@ -1,4 +1,4 @@
-package com.example.notice.domain.post.dto
+package com.example.notice.domain.post.dto.response
 
 import com.example.notice.domain.post.model.PostEntity
 import com.example.notice.domain.post.model.PostStatus
