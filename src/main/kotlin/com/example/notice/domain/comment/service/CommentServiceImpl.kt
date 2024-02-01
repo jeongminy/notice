@@ -5,11 +5,9 @@ import com.example.notice.domain.comment.dto.request.UpdateCommentRequest
 import com.example.notice.domain.comment.dto.response.CommentResponse
 import com.example.notice.domain.comment.model.CommentEntity
 import com.example.notice.domain.comment.model.toResponse
-
 import com.example.notice.domain.comment.repository.CommentRepository
 import com.example.notice.domain.exception.ModelNotFoundException
 import com.example.notice.domain.post.repository.PostRepository
-
 import com.example.notice.domain.user.repository.UserRepository
 import com.example.notice.infra.security.UserPrincipal
 import org.springframework.data.repository.findByIdOrNull
@@ -36,7 +34,6 @@ class CommentServiceImpl(
         )
         return commentRepository.save(comment).toResponse()
     }
-
 
     override fun updateComment(
         postId: Long,
