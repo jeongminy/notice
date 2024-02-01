@@ -1,6 +1,7 @@
 package com.example.notice.domain.comment.service
 
 import com.example.notice.domain.comment.dto.request.AddCommentRequest
+import com.example.notice.domain.comment.dto.request.UpdateCommentRequest
 import com.example.notice.domain.comment.dto.response.CommentResponse
 import com.example.notice.domain.comment.model.CommentEntity
 import com.example.notice.domain.comment.model.toResponse
@@ -24,7 +25,7 @@ class CommentServiceImpl(
     override fun addComment(
         postId: Long,
         request: AddCommentRequest,
-        userPrincipal: UserPrincipal
+        userPrincipal: UserPrincipal,
     ): CommentResponse {
         val post = postRepository.findByIdOrNull(postId) ?: throw ModelNotFoundException("Post", postId)
         val user = userRepository.findByIdOrNull(userPrincipal.id) ?: throw ModelNotFoundException("UserEntity", userPrincipal.id)
@@ -36,4 +37,19 @@ class CommentServiceImpl(
         return commentRepository.save(comment).toResponse()
     }
 
+
+    override fun updateComment(
+        postId: Long,
+        commentId: Long,
+        request: UpdateCommentRequest,
+        userPrincipal: UserPrincipal,
+    ): CommentResponse {
+        val post = postRepository.findByIdOrNull(postId) ?: throw ModelNotFoundException("Post", postId)
+        val user = userRepository.findByIdOrNull(userPrincipal.id) ?: throw ModelNotFoundException("UserEntity", userPrincipal.id)
+        val comment: CommentEntity = commentRepository.findByIdOrNull(commentId) ?: throw ModelNotFoundException("CommentEntity", commentId)
+
+        comment.comment = request.comment
+
+        return comment.toResponse()
+    }
 }
