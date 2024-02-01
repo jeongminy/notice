@@ -1,5 +1,6 @@
 package com.example.notice.domain.comment.model
 
+import com.example.notice.domain.comment.dto.response.CommentResponse
 import com.example.notice.domain.post.model.PostEntity
 import com.example.notice.domain.user.model.UserEntity
 import jakarta.persistence.*
@@ -30,4 +31,11 @@ class CommentEntity (
 
     @Column(name = "updated_at")
     var updatedAt: LocalDateTime? = null
+}
+
+fun CommentEntity.toResponse(): CommentResponse{
+    return CommentResponse(
+        nickname = user.profile.nickname,
+        comment = comment,
+        )
 }

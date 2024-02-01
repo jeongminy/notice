@@ -1,4 +1,6 @@
 package com.example.notice.domain.comment.dto.response
 
-class CommentResponse {
-}
+data class CommentResponse (
+    val nickname: String,
+    val comment: String,
+)

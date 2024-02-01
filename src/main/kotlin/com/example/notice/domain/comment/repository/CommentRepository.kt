@@ -1,4 +1,6 @@
 package com.example.notice.domain.comment.repository
 
-class CommentRepository {
-}
+import com.example.notice.domain.comment.model.CommentEntity
+import org.springframework.data.jpa.repository.JpaRepository
+
+interface CommentRepository : JpaRepository<CommentEntity, Long>
