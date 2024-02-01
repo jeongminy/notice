@@ -8,6 +8,7 @@ import com.example.notice.domain.post.service.PostService
 import com.example.notice.infra.security.UserPrincipal
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
+import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -41,7 +42,7 @@ class PostController(
     @Operation(summary = "글 생성")
     @PostMapping
     fun addPost(
-        @RequestBody addPostRequest: AddPostRequest,
+        @Valid @RequestBody addPostRequest: AddPostRequest,
         @AuthenticationPrincipal userPrincipal: UserPrincipal,
     ): ResponseEntity<PostResponse>{
         return ResponseEntity

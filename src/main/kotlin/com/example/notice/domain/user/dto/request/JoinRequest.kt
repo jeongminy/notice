@@ -14,18 +14,17 @@ data class JoinRequest(
     @field:NotBlank(message = "비밀번호를 입력해주세요.")
     @Schema(description = "비밀번호", example = "Password12!@")
     @field:Pattern(
-        regexp = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$",
-        message = "비밀번호는 최소 8자 이상, 숫자, 문자, 특수문자를 포함해야 합니다. 공백은 포함하지 않습니다.")
+        regexp = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{4,}$",
+        message = "비밀번호는 최소 4자 이상, 숫자, 문자, 특수문자를 포함해야 합니다. 공백은 포함하지 않습니다.")
     val password: String,
 
     @field:NotBlank(message = "비밀번호확인을 입력해주세요.")
     @Schema(description = "비밀번호", example = "Password12!@")
     @field:Pattern(
-        regexp = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$",
-        message = "비밀번호는 최소 8자 이상, 숫자, 문자, 특수문자를 포함해야 합니다. 공백은 포함하지 않습니다.")
+        regexp = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{4,}$",
+        message = "비밀번호는 최소 4자 이상, 숫자, 문자, 특수문자를 포함해야 합니다. 공백은 포함하지 않습니다.")
     val verifiedPassword: String,
 
-    @field:NotBlank(message = "역할을 입력해주세요.")
     @Schema(description = "역할", example = "USER")
     val role: Role,
 
