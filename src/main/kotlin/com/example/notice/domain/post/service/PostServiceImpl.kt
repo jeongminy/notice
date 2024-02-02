@@ -5,7 +5,7 @@ import com.example.notice.domain.exception.InvalidCredentialException
 import com.example.notice.domain.exception.ModelNotFoundException
 import com.example.notice.domain.post.dto.request.AddPostRequest
 import com.example.notice.domain.post.dto.request.UpdatePostRequest
-import com.example.notice.domain.post.dto.response.PostDetailResponse
+import com.example.notice.domain.post.dto.response.PostByIdResponse
 import com.example.notice.domain.post.dto.response.PostResponse
 import com.example.notice.domain.post.like.service.LikeService
 import com.example.notice.domain.post.model.PostEntity
@@ -14,7 +14,6 @@ import com.example.notice.domain.post.model.toResponse
 import com.example.notice.domain.post.repository.PostRepository
 import com.example.notice.domain.user.repository.UserRepository
 import com.example.notice.infra.security.UserPrincipal
-import org.springframework.boot.autoconfigure.security.SecurityProperties.User
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
@@ -31,12 +30,12 @@ class PostServiceImpl(
         return postRepository.findAll().map { it.toResponse() }
     }
 
-    override fun getPostById(postId: Long, userPrincipal:UserPrincipal): PostDetailResponse {
+    override fun getPostById(postId: Long, userPrincipal:UserPrincipal): PostByIdResponse {
         val post = postRepository.findByIdOrNull(postId) ?: throw ModelNotFoundException("PostEntity", postId)
         val countLikes = likeService.countLikes(postId)
         val isLiked = likeService.isLiked(userPrincipal.id, postId)
 
-        return PostDetailResponse(
+        return PostByIdResponse(
             id = post.id!!,
             nickname = post.user.profile.nickname,
             title = post.title,
@@ -76,9 +75,9 @@ class PostServiceImpl(
         val post = postRepository.findByIdOrNull(postId)
             ?: throw ModelNotFoundException("PostEntity", postId)
 
-        //ADMIN이거나 본인인 경우에만 삭제 가능하도록 확인
+        //ADMIN이거나 본인인 경우에만 수정 가능하도록 확인
         if ((userPrincipal.id != post.user.id) && (userPrincipal.authorities.first().toString() == "ROLE_USER"))
-            throw InvalidCredentialException("본인의 글이 아니므로 권한이 없습니다.")
+            throw InvalidCredentialException("본인의 글이 아니므로 수정할 권한이 없습니다.")
 
             post.title = request.title
             post.description = request.description
@@ -97,7 +96,7 @@ class PostServiceImpl(
 
         //ADMIN이거나 본인인 경우에만 삭제 가능하도록 확인
         if ((userPrincipal.id != post.user.id) && (userPrincipal.authorities.first().toString() == "ROLE_USER"))
-            throw InvalidCredentialException("본인의 글이 아니므로 권한이 없습니다.")
+            throw InvalidCredentialException("본인의 글이 아니므로 삭제할 권한이 없습니다.")
 
         postRepository.delete(post)
     }

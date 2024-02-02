@@ -2,7 +2,7 @@ package com.example.notice.domain.post.controller
 
 import com.example.notice.domain.post.dto.request.AddPostRequest
 import com.example.notice.domain.post.dto.request.UpdatePostRequest
-import com.example.notice.domain.post.dto.response.PostDetailResponse
+import com.example.notice.domain.post.dto.response.PostByIdResponse
 import com.example.notice.domain.post.dto.response.PostResponse
 import com.example.notice.domain.post.service.PostService
 import com.example.notice.infra.security.UserPrincipal
@@ -35,7 +35,7 @@ class PostController(
     fun getPost(
         @PathVariable postId: Long,
         @AuthenticationPrincipal userPrincipal: UserPrincipal,
-    ): ResponseEntity<PostDetailResponse>{
+    ): ResponseEntity<PostByIdResponse>{
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(postService.getPostById(postId, userPrincipal))
