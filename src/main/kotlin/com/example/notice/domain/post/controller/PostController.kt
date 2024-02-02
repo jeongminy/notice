@@ -34,10 +34,11 @@ class PostController(
     @GetMapping("/{postId}")
     fun getPost(
         @PathVariable postId: Long,
+        @AuthenticationPrincipal userPrincipal: UserPrincipal,
     ): ResponseEntity<PostDetailResponse>{
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(postService.getPostById(postId))
+            .body(postService.getPostById(postId, userPrincipal))
     }
 
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")

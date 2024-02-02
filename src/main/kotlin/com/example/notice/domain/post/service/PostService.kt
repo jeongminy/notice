@@ -11,7 +11,7 @@ interface PostService {
 
     fun getPosts(): List<PostResponse>
 
-    fun getPostById(postId: Long): PostDetailResponse
+    fun getPostById(postId: Long, userPrincipal:UserPrincipal): PostDetailResponse
 
     fun addPost(addPostRequest: AddPostRequest, userPrincipal: UserPrincipal): PostResponse
 

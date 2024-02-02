@@ -7,12 +7,14 @@ import com.example.notice.domain.post.dto.request.AddPostRequest
 import com.example.notice.domain.post.dto.request.UpdatePostRequest
 import com.example.notice.domain.post.dto.response.PostDetailResponse
 import com.example.notice.domain.post.dto.response.PostResponse
+import com.example.notice.domain.post.like.service.LikeService
 import com.example.notice.domain.post.model.PostEntity
 import com.example.notice.domain.post.model.PostStatus
 import com.example.notice.domain.post.model.toResponse
 import com.example.notice.domain.post.repository.PostRepository
 import com.example.notice.domain.user.repository.UserRepository
 import com.example.notice.infra.security.UserPrincipal
+import org.springframework.boot.autoconfigure.security.SecurityProperties.User
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
@@ -22,14 +24,17 @@ import java.time.LocalDateTime
 class PostServiceImpl(
     private val postRepository: PostRepository,
     private val userRepository: UserRepository,
+    private val likeService: LikeService,
 ): PostService {
 
     override fun getPosts(): List<PostResponse> {
         return postRepository.findAll().map { it.toResponse() }
     }
 
-    override  fun getPostById(postId: Long): PostDetailResponse {
+    override fun getPostById(postId: Long, userPrincipal:UserPrincipal): PostDetailResponse {
         val post = postRepository.findByIdOrNull(postId) ?: throw ModelNotFoundException("PostEntity", postId)
+        val countLikes = likeService.countLikes(postId)
+        val isLiked = likeService.isLiked(userPrincipal.id, postId)
 
         return PostDetailResponse(
             id = post.id!!,
@@ -38,6 +43,8 @@ class PostServiceImpl(
             description = post.description,
             status = post.status,
             postImageUrl = post.postImageUrl,
+            likeCount = countLikes,
+            likedByCurrentUser = isLiked,
             createdAt = post.createdAt!!,
             updatedAt = post.updatedAt!!,
             comments = post.comments.map { it.toResponse() }

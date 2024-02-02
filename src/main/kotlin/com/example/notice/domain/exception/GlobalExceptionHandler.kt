@@ -36,5 +36,12 @@ class GlobalExceptionHandler {
             .body(ErrorResponse(e.message))
     }
 
+    @ExceptionHandler(UnauthorizedOperationException::class)
+    fun handleUnauthorizedOperationException(e:UnauthorizedOperationException): ResponseEntity<ErrorResponse> {
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(ErrorResponse(e.message))
+    }
+
 
 }

@@ -12,6 +12,8 @@ data class PostDetailResponse (
     val description: String,
     val status: PostStatus,
     val postImageUrl: String,
+    val likeCount: Int,
+    val likedByCurrentUser: Boolean,
     val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime = LocalDateTime.now(),
     val comments: List<CommentResponse>
