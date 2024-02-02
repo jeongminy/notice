@@ -1,5 +1,9 @@
 package com.example.notice.domain.exception
 
+import com.example.notice.exception.RuntimeException.DuplicateValueException
+import com.example.notice.exception.RuntimeException.InvalidCredentialException
+import com.example.notice.exception.RuntimeException.ModelNotFoundException
+import com.example.notice.exception.RuntimeException.UnauthorizedOperationException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.MethodArgumentNotValidException
@@ -37,7 +41,7 @@ class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(UnauthorizedOperationException::class)
-    fun handleUnauthorizedOperationException(e:UnauthorizedOperationException): ResponseEntity<ErrorResponse> {
+    fun handleUnauthorizedOperationException(e: UnauthorizedOperationException): ResponseEntity<ErrorResponse> {
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)
             .body(ErrorResponse(e.message))

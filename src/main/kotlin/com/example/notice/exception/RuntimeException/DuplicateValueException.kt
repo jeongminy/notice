@@ -1,4 +1,4 @@
-package com.example.notice.domain.exception
+package com.example.notice.exception.RuntimeException
 
 data class DuplicateValueException(
     override val message: String

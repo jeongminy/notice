@@ -1,3 +1,3 @@
-package com.example.notice.domain.exception
+package com.example.notice.exception.RuntimeException
 
 class UnauthorizedOperationException(message: String): RuntimeException(message)

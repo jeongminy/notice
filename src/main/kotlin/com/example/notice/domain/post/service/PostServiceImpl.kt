@@ -1,8 +1,8 @@
 package com.example.notice.domain.post.service
 
 import com.example.notice.domain.comment.model.toResponse
-import com.example.notice.domain.exception.InvalidCredentialException
-import com.example.notice.domain.exception.ModelNotFoundException
+import com.example.notice.exception.RuntimeException.InvalidCredentialException
+import com.example.notice.exception.RuntimeException.ModelNotFoundException
 import com.example.notice.domain.post.dto.request.AddPostRequest
 import com.example.notice.domain.post.dto.request.UpdatePostRequest
 import com.example.notice.domain.post.dto.response.PostByIdResponse

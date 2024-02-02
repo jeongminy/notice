@@ -6,11 +6,9 @@ import com.example.notice.domain.comment.dto.response.CommentResponse
 import com.example.notice.domain.comment.model.CommentEntity
 import com.example.notice.domain.comment.model.toResponse
 import com.example.notice.domain.comment.repository.CommentRepository
-import com.example.notice.domain.exception.InvalidCredentialException
-import com.example.notice.domain.exception.ModelNotFoundException
-import com.example.notice.domain.post.dto.response.PostResponse
+import com.example.notice.exception.RuntimeException.InvalidCredentialException
+import com.example.notice.exception.RuntimeException.ModelNotFoundException
 import com.example.notice.domain.post.model.PostEntity
-import com.example.notice.domain.post.model.toResponse
 import com.example.notice.domain.post.repository.PostRepository
 import com.example.notice.domain.user.model.UserEntity
 import com.example.notice.domain.user.repository.UserRepository

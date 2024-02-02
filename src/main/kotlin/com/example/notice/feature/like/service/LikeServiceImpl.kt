@@ -1,7 +1,7 @@
 package com.example.notice.domain.post.like.service
 
-import com.example.notice.domain.exception.ModelNotFoundException
-import com.example.notice.domain.exception.UnauthorizedOperationException
+import com.example.notice.exception.RuntimeException.ModelNotFoundException
+import com.example.notice.exception.RuntimeException.UnauthorizedOperationException
 import com.example.notice.domain.post.like.model.LikeEntity
 import com.example.notice.domain.post.like.repository.LikeRepository
 import com.example.notice.domain.post.repository.PostRepository
