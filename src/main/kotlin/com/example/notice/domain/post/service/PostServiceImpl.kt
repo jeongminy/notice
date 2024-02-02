@@ -7,12 +7,12 @@ import com.example.notice.domain.post.dto.request.AddPostRequest
 import com.example.notice.domain.post.dto.request.UpdatePostRequest
 import com.example.notice.domain.post.dto.response.PostByIdResponse
 import com.example.notice.domain.post.dto.response.PostResponse
-import com.example.notice.domain.post.like.service.LikeService
 import com.example.notice.domain.post.model.PostEntity
 import com.example.notice.domain.post.model.PostStatus
 import com.example.notice.domain.post.model.toResponse
 import com.example.notice.domain.post.repository.PostRepository
 import com.example.notice.domain.user.repository.UserRepository
+import com.example.notice.feature.like.service.LikeService
 import com.example.notice.infra.security.UserPrincipal
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
