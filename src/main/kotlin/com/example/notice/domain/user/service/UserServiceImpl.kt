@@ -1,7 +1,7 @@
 package com.example.notice.domain.user.service
 
-import com.example.notice.exception.RuntimeException.DuplicateValueException
-import com.example.notice.exception.RuntimeException.InvalidCredentialException
+import com.example.notice.exception.runtimeException.DuplicateValueException
+import com.example.notice.exception.runtimeException.InvalidCredentialException
 import com.example.notice.domain.user.dto.request.JoinRequest
 import com.example.notice.domain.user.dto.request.LoginRequest
 import com.example.notice.domain.user.dto.response.LoginResponse

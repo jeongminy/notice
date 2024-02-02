@@ -1,9 +1,9 @@
-package com.example.notice.domain.exception
+package com.example.notice.exception
 
-import com.example.notice.exception.RuntimeException.DuplicateValueException
-import com.example.notice.exception.RuntimeException.InvalidCredentialException
-import com.example.notice.exception.RuntimeException.ModelNotFoundException
-import com.example.notice.exception.RuntimeException.UnauthorizedOperationException
+import com.example.notice.exception.runtimeException.DuplicateValueException
+import com.example.notice.exception.runtimeException.InvalidCredentialException
+import com.example.notice.exception.runtimeException.ModelNotFoundException
+import com.example.notice.exception.runtimeException.UnauthorizedOperationException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.MethodArgumentNotValidException

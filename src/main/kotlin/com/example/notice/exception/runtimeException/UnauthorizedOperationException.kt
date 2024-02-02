@@ -1,3 +1,3 @@
-package com.example.notice.exception.RuntimeException
+package com.example.notice.exception.runtimeException
 
 class UnauthorizedOperationException(message: String): RuntimeException(message)

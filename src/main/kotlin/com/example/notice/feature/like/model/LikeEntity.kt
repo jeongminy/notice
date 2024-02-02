@@ -1,4 +1,4 @@
-package com.example.notice.domain.post.like.model
+package com.example.notice.feature.like.model
 
 import com.example.notice.domain.post.model.PostEntity
 import com.example.notice.domain.user.model.UserEntity

@@ -1,4 +1,4 @@
-package com.example.notice.exception.RuntimeException
+package com.example.notice.exception.runtimeException
 
 data class InvalidCredentialException(
     override val message: String? = "The credential is invalid"

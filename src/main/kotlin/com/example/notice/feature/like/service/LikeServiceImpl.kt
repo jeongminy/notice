@@ -1,11 +1,11 @@
-package com.example.notice.domain.post.like.service
+package com.example.notice.feature.like.service
 
-import com.example.notice.exception.RuntimeException.ModelNotFoundException
-import com.example.notice.exception.RuntimeException.UnauthorizedOperationException
-import com.example.notice.domain.post.like.model.LikeEntity
-import com.example.notice.domain.post.like.repository.LikeRepository
+import com.example.notice.exception.runtimeException.ModelNotFoundException
+import com.example.notice.exception.runtimeException.UnauthorizedOperationException
 import com.example.notice.domain.post.repository.PostRepository
 import com.example.notice.domain.user.repository.UserRepository
+import com.example.notice.feature.like.model.LikeEntity
+import com.example.notice.feature.like.repository.LikeRepository
 import com.example.notice.infra.security.UserPrincipal
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
