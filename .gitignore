@@ -38,3 +38,6 @@ out/
 
 ### Kotlin ###
 .kotlin
+
+jwt.yml
+aws.yml
