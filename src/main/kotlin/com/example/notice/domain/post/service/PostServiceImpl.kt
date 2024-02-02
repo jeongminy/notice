@@ -27,7 +27,7 @@ class PostServiceImpl(
     private val likeService: LikeService,
 ): PostService {
 
-    override fun getPosts(): List<PostResponse> {
+    override fun getAllPosts(): List<PostResponse> {
         return postRepository.findAll().map { it.toResponse() }
     }
 

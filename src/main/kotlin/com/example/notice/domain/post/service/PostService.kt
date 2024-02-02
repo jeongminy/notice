@@ -5,11 +5,10 @@ import com.example.notice.domain.post.dto.request.UpdatePostRequest
 import com.example.notice.domain.post.dto.response.PostDetailResponse
 import com.example.notice.domain.post.dto.response.PostResponse
 import com.example.notice.infra.security.UserPrincipal
-import org.springframework.http.ResponseEntity
 
 interface PostService {
 
-    fun getPosts(): List<PostResponse>
+    fun getAllPosts(): List<PostResponse>
 
     fun getPostById(postId: Long, userPrincipal:UserPrincipal): PostDetailResponse
 

@@ -24,10 +24,10 @@ class PostController(
 
     @Operation(summary = "글 전체 조회")
     @GetMapping
-    fun getPosts(): ResponseEntity<List<PostResponse>> {
+    fun getAllPosts(): ResponseEntity<List<PostResponse>> {
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(postService.getPosts())
+            .body(postService.getAllPosts())
     }
 
     @Operation(summary = "글 단건 조회")
