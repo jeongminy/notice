@@ -14,6 +14,8 @@ import com.example.notice.domain.post.repository.PostRepository
 import com.example.notice.domain.user.repository.UserRepository
 import com.example.notice.feature.like.service.LikeService
 import com.example.notice.infra.security.UserPrincipal
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
@@ -26,7 +28,7 @@ class PostServiceImpl(
     private val likeService: LikeService,
 ): PostService {
 
-    override fun getAllPosts(): List<PostResponse> {
+    override fun getPostList(): List<PostResponse> {
         return postRepository.findAll().map { it.toResponse() }
     }
 
@@ -99,5 +101,22 @@ class PostServiceImpl(
             throw InvalidCredentialException("본인의 글이 아니므로 삭제할 권한이 없습니다.")
 
         postRepository.delete(post)
+    }
+
+    //제목으로 검색
+    override fun searchPostList(title: String): List<PostResponse> {
+        return postRepository.searchPostListByTitle(title).map { it.toResponse() }
+    }
+
+    //글 목록 pagination
+    override fun getPaginatedPostList(pageable: Pageable, status: String?): Page<PostResponse> {
+        val postStatus = when (status) {
+            "UNCOMPLETE" -> PostStatus.UNCOMPLETE
+            "COMPLETE" -> PostStatus.COMPLETE
+            null -> null
+            else -> throw IllegalArgumentException("The status is invalid")
+        }
+
+        return postRepository.findByPageableAndStatus(pageable, postStatus).map { it.toResponse() }
     }
 }

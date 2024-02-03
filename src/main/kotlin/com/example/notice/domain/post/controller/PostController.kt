@@ -9,6 +9,9 @@ import com.example.notice.infra.security.UserPrincipal
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
@@ -24,10 +27,10 @@ class PostController(
 
     @Operation(summary = "글 전체 조회")
     @GetMapping
-    fun getAllPosts(): ResponseEntity<List<PostResponse>> {
+    fun getPostList(): ResponseEntity<List<PostResponse>> {
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(postService.getAllPosts())
+            .body(postService.getPostList())
     }
 
     @Operation(summary = "글 단건 조회")
@@ -78,4 +81,24 @@ class PostController(
             .status(HttpStatus.NO_CONTENT)
             .build()
     }
+
+    @Operation(summary = "글 제목 검색")
+    @GetMapping("/search")
+    fun searchPostList(@RequestParam(value = "title") title: String): ResponseEntity<List<PostResponse>>{
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(postService.searchPostList(title))
+    }
+
+    @Operation(summary = "글 목록 페이지네이션")
+    @GetMapping("/page")
+    fun getPaginatedPostList(
+        @PageableDefault(size = 15, sort = ["id"]) pageable: Pageable,
+        @RequestParam(value = "status", required = false) status: String?
+    ): ResponseEntity<Page<PostResponse>> {
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(postService.getPaginatedPostList(pageable, status))
+    }
+
 }
