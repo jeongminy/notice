@@ -29,7 +29,7 @@ class LikeServiceImpl(
             throw UnauthorizedOperationException("자신의 글에는 좋아요를 누를 수 없습니다.")
         }
 
-        //이미 좋아요를 눌렀었는지 확인하고, 있다면 삭제
+        //이미 좋아요를 눌렀었는지 확인하고, 이미 눌렀었다면 삭제
         val confirmLike = likeRepository.existsByUserIdAndPostId(userPrincipal.id, postId)
         if (confirmLike) {
             likeRepository.deleteByUserIdAndPostId(userPrincipal.id, postId)
