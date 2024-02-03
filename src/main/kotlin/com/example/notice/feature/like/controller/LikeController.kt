@@ -31,7 +31,6 @@ class LikeController(
     }
 
     @Operation(summary = "좋아요 갯수 조회")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     @GetMapping
     fun countLikes(@PathVariable postId: Long): ResponseEntity<Int> {
         val likesCount = likeService.countLikes(postId)
