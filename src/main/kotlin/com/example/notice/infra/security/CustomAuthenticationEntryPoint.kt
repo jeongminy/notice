@@ -1,7 +1,7 @@
 package com.example.notice.infra.security
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.example.notice.domain.exception.ErrorResponse
+import com.example.notice.exception.ErrorResponse
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.http.MediaType

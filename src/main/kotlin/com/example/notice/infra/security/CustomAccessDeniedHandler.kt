@@ -1,6 +1,6 @@
 package com.example.notice.infra.security
 
-import com.example.notice.domain.exception.ErrorResponse
+import com.example.notice.exception.ErrorResponse
 import com.fasterxml.jackson.databind.ObjectMapper
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse

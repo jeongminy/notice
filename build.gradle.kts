@@ -6,6 +6,7 @@ plugins {
 	kotlin("jvm") version "1.9.22"
 	kotlin("plugin.spring") version "1.9.22"
 	kotlin("plugin.noarg") version "1.8.22"
+	kotlin("kapt") version "1.8.22"
 }
 
 group = "com.example"
@@ -25,6 +26,8 @@ repositories {
 	mavenCentral()
 }
 
+val queryDslVersion = "5.0.0"
+
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -35,6 +38,8 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-aop") //Spring AOP
 	implementation("org.springframework.boot:spring-boot-starter-security") //Spring Security
 	implementation("io.jsonwebtoken:jjwt-api:0.12.3") //JWT
+	implementation("com.querydsl:querydsl-jpa:$queryDslVersion:jakarta") // queryDsl
+	kapt("com.querydsl:querydsl-apt:$queryDslVersion:jakarta") // queryDsl
 
 	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.3") //JWT
 	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.3") //JWT
