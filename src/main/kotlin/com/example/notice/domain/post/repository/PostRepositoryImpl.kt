@@ -26,8 +26,6 @@ class PostRepositoryImpl: QueryDslSupport(), CustomPostRepository {
 
         postStatus?.let { whereClause.and(post.status.eq(postStatus)) }
 
-
-
         daysAgo?.let {
             val startDate = LocalDateTime.now().minusDays(daysAgo)
             val endDate = LocalDateTime.now().minusDays(daysAgo-1)
