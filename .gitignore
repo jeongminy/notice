@@ -39,5 +39,9 @@ out/
 ### Kotlin ###
 .kotlin
 
+application.properties
+*.yml
+*.yaml
+
 jwt.yml
 aws.yml
