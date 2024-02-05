@@ -1,7 +1,7 @@
-package com.example.notice.infra.email.controller
+package com.example.notice.feature.email.controller
 
-import com.example.notice.infra.email.dto.MailResponse
-import com.example.notice.infra.email.service.MailService
+import com.example.notice.feature.email.dto.MailResponse
+import com.example.notice.feature.email.service.MailService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus

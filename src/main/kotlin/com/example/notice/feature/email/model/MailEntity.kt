@@ -1,4 +1,4 @@
-package com.example.notice.infra.email.model
+package com.example.notice.feature.email.model
 
 import jakarta.persistence.*
 
