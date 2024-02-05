@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
+import java.time.LocalDateTime
 
 @Tag(name = "post", description = "글")
 @RequestMapping("/api/posts")
@@ -82,23 +83,31 @@ class PostController(
             .build()
     }
 
-    @Operation(summary = "글 제목 검색")
-    @GetMapping("/search")
-    fun searchPostList(@RequestParam(value = "title") title: String): ResponseEntity<List<PostResponse>>{
+    @Operation(summary = "글 목록 조회 - 제목 검색")
+    @GetMapping("/search/title")
+    fun getPostListByTitle(@RequestParam(value = "title") title: String): ResponseEntity<List<PostResponse>>{
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(postService.searchPostList(title))
+            .body(postService.getPostListByTitle(title))
     }
 
-    @Operation(summary = "글 목록 페이지네이션")
+    @Operation(summary = "글 목록 조회 - 페이지네이션")
     @GetMapping("/page")
-    fun getPaginatedPostList(
+    fun getPostListPaginated(
         @PageableDefault(size = 15, sort = ["id"]) pageable: Pageable,
         @RequestParam(value = "status", required = false) status: String?
     ): ResponseEntity<Page<PostResponse>> {
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(postService.getPaginatedPostList(pageable, status))
+            .body(postService.getPostListPaginated(pageable, status))
+    }
+
+    @Operation(summary = "글 목록 조회 - 생성날짜기준 내림차순")
+    @GetMapping("/search/date")
+    fun getPostListByCreatedAt(): ResponseEntity<List<PostResponse>>{
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(postService.getPostListByCreatedAt())
     }
 
 }

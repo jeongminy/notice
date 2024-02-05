@@ -47,8 +47,8 @@ class PostServiceImpl(
             postImageUrl = post.postImageUrl,
             likeCount = countLikes,
             likedByCurrentUser = isLiked,
-            createdAt = post.createdAt!!,
-            updatedAt = post.updatedAt!!,
+            createdAt = post.createdAt,
+            updatedAt = post.updatedAt,
             comments = post.comments.map { it.toResponse() }
         )
     }
@@ -107,13 +107,8 @@ class PostServiceImpl(
         postRepository.delete(post)
     }
 
-    //제목으로 검색
-    override fun searchPostList(title: String): List<PostResponse> {
-        return postRepository.searchPostListByTitle(title).map { it.toResponse() }
-    }
-
-    //글 목록 pagination
-    override fun getPaginatedPostList(pageable: Pageable, status: String?): Page<PostResponse> {
+    //글 목록 페이지네이션 - 페이징 + 커스텀 정렬 (id, title, nickname, description)
+    override fun getPostListPaginated(pageable: Pageable, status: String?): Page<PostResponse> {
         val postStatus = when (status) {
             "UNCOMPLETE" -> PostStatus.UNCOMPLETE
             "COMPLETE" -> PostStatus.COMPLETE
@@ -122,5 +117,15 @@ class PostServiceImpl(
         }
 
         return postRepository.findByPageableAndStatus(pageable, postStatus).map { it.toResponse() }
+    }
+
+    //제목으로 검색
+    override fun getPostListByTitle(title: String): List<PostResponse> {
+        return postRepository.searchPostListByTitle(title).map { it.toResponse() }
+    }
+
+    //생성날짜 기준 정렬
+    override fun getPostListByCreatedAt(): List<PostResponse> {
+        return postRepository.searchPostListByCreatedAt().map { it.toResponse() }
     }
 }

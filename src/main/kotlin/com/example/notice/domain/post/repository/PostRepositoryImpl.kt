@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
+import java.time.LocalDateTime
 
 @Repository
 class PostRepositoryImpl: QueryDslSupport(), CustomPostRepository {
@@ -35,6 +36,9 @@ class PostRepositoryImpl: QueryDslSupport(), CustomPostRepository {
             when (pageable.sort.first()?.property) {
                 "id" -> query.orderBy(post.id.asc())
                 "title" -> query.orderBy(post.title.asc())
+                "nickname" -> query.orderBy(post.user.profile.nickname.asc())
+                "description" -> query.orderBy(post.description.asc())
+
                 else -> query.orderBy(post.id.asc())
             }
         }
@@ -43,6 +47,12 @@ class PostRepositoryImpl: QueryDslSupport(), CustomPostRepository {
 
         return PageImpl(contents, pageable, totalCount)
 
+    }
+
+    override fun searchPostListByCreatedAt(): List<PostEntity> {
+        return queryFactory.selectFrom(post)
+            .orderBy(post.createdAt.desc())
+            .fetch()
     }
 }
 

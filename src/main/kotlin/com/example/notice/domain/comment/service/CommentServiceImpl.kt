@@ -9,10 +9,14 @@ import com.example.notice.domain.comment.repository.CommentRepository
 import com.example.notice.exception.runtimeException.InvalidCredentialException
 import com.example.notice.exception.runtimeException.ModelNotFoundException
 import com.example.notice.domain.post.model.PostEntity
+import com.example.notice.domain.post.model.PostStatus
+import com.example.notice.domain.post.model.toResponse
 import com.example.notice.domain.post.repository.PostRepository
 import com.example.notice.domain.user.model.UserEntity
 import com.example.notice.domain.user.repository.UserRepository
 import com.example.notice.infra.security.UserPrincipal
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -25,7 +29,7 @@ class CommentServiceImpl(
     private val userRepository: UserRepository
 ): CommentService {
 
-    override fun getComments(): List<CommentResponse> {
+    override fun getCommentList(): List<CommentResponse> {
         return commentRepository.findAll().map { it.toResponse() }
     }
 
@@ -77,5 +81,10 @@ class CommentServiceImpl(
             throw InvalidCredentialException("본인의 글이 아니므로 권한이 없습니다.")
 
         commentRepository.delete(comment)
+    }
+
+    //댓글 목록 페이지네이션 - 페이징 + 커스텀 정렬 (id, nickname, comment, createdAt)
+    override fun getCommentListPaginated(pageable: Pageable): Page<CommentResponse> {
+        return commentRepository.findByPageable(pageable).map { it.toResponse() }
     }
 }

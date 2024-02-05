@@ -7,6 +7,7 @@ import com.example.notice.domain.post.dto.response.PostResponse
 import com.example.notice.infra.security.UserPrincipal
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
+import java.time.LocalDateTime
 
 interface PostService {
 
@@ -20,7 +21,9 @@ interface PostService {
 
     fun deletePost(postId: Long, userPrincipal: UserPrincipal)
 
-    fun searchPostList(title: String): List<PostResponse>
+    fun getPostListPaginated(pageable: Pageable, status: String?): Page<PostResponse>
 
-    fun getPaginatedPostList(pageable: Pageable, status: String?): Page<PostResponse>
+    fun getPostListByTitle(title: String): List<PostResponse>
+
+    fun getPostListByCreatedAt(): List<PostResponse>
 }
