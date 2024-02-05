@@ -32,6 +32,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
+	implementation("org.springframework.boot:spring-boot-starter-mail") // verification email
 	implementation("org.springframework.cloud:spring-cloud-starter-aws:2.0.1.RELEASE") //aws
 	implementation("org.springframework.boot:spring-boot-starter-validation") //validation
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0") //swager

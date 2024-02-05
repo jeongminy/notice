@@ -15,6 +15,7 @@ import com.example.notice.domain.user.repository.UserRepository
 import com.example.notice.infra.security.UserPrincipal
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import java.time.LocalDateTime
 
 @Service
 class CommentServiceImpl(
@@ -57,6 +58,7 @@ class CommentServiceImpl(
             throw InvalidCredentialException("본인의 글이 아니므로 권한이 없습니다.")
 
         comment.comment = request.comment
+        comment.updatedAt = LocalDateTime.now()
 
         return commentRepository.save(comment).toResponse()
     }
