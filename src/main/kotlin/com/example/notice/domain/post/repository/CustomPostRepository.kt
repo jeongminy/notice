@@ -10,7 +10,7 @@ interface CustomPostRepository {
 
     fun searchPostListByTitle(title: String): List<PostEntity>
 
-    fun findByPageableAndStatus(pageable: Pageable, postStatus: PostStatus?): Page<PostEntity>
+    fun findByPageableAndStatus(pageable: Pageable, postStatus: PostStatus?, daysAgo: Long?): Page<PostEntity>
 
     fun searchPostListByCreatedAt(): List<PostEntity>
 

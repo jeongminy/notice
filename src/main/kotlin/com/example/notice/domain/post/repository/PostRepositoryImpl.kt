@@ -21,9 +21,18 @@ class PostRepositoryImpl: QueryDslSupport(), CustomPostRepository {
             .fetch()
     }
 
-    override fun findByPageableAndStatus(pageable: Pageable, postStatus: PostStatus?): Page<PostEntity> {
+    override fun findByPageableAndStatus(pageable: Pageable, postStatus: PostStatus?, daysAgo: Long?): Page<PostEntity> {
         val whereClause = BooleanBuilder()
+
         postStatus?.let { whereClause.and(post.status.eq(postStatus)) }
+
+
+
+        daysAgo?.let {
+            val startDate = LocalDateTime.now().minusDays(daysAgo)
+            val endDate = LocalDateTime.now().minusDays(daysAgo-1)
+
+            whereClause.and(post.createdAt.between(startDate, endDate)) }
 
         val totalCount = queryFactory.select(post.count()).from(post).where(whereClause).fetchOne() ?: 0L
 

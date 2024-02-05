@@ -12,6 +12,7 @@ import jakarta.validation.Valid
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
+import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
@@ -95,14 +96,15 @@ class PostController(
     @GetMapping("/page")
     fun getPostListPaginated(
         @PageableDefault(size = 15, sort = ["id"]) pageable: Pageable,
-        @RequestParam(value = "status", required = false) status: String?
+        @RequestParam(value = "status", required = false) status: String?, daysAgo: Long?,
     ): ResponseEntity<Page<PostResponse>> {
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(postService.getPostListPaginated(pageable, status))
+            .body(postService.getPostListPaginated(pageable, status, daysAgo))
     }
 
     @Operation(summary = "글 목록 조회 - 생성날짜기준 내림차순")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @GetMapping("/search/date")
     fun getPostListByCreatedAt(): ResponseEntity<List<PostResponse>>{
         return ResponseEntity

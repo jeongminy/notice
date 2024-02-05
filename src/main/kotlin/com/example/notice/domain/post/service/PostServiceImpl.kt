@@ -9,6 +9,7 @@ import com.example.notice.domain.post.dto.response.PostByIdResponse
 import com.example.notice.domain.post.dto.response.PostResponse
 import com.example.notice.domain.post.model.PostEntity
 import com.example.notice.domain.post.model.PostStatus
+import com.example.notice.domain.post.model.QPostEntity.postEntity
 import com.example.notice.domain.post.model.toResponse
 import com.example.notice.domain.post.repository.PostRepository
 import com.example.notice.domain.user.repository.UserRepository
@@ -107,8 +108,8 @@ class PostServiceImpl(
         postRepository.delete(post)
     }
 
-    //글 목록 페이지네이션 - 페이징 + 커스텀 정렬 (id, title, nickname, description)
-    override fun getPostListPaginated(pageable: Pageable, status: String?): Page<PostResponse> {
+    //글 목록 페이지네이션 - 페이징 + 커스텀 정렬 (id, title, nickname, description), N일전 게시글 조회
+    override fun getPostListPaginated(pageable: Pageable, status: String?, daysAgo: Long?): Page<PostResponse> {
         val postStatus = when (status) {
             "UNCOMPLETE" -> PostStatus.UNCOMPLETE
             "COMPLETE" -> PostStatus.COMPLETE
@@ -116,15 +117,15 @@ class PostServiceImpl(
             else -> throw IllegalArgumentException("The status is invalid")
         }
 
-        return postRepository.findByPageableAndStatus(pageable, postStatus).map { it.toResponse() }
+        return postRepository.findByPageableAndStatus(pageable, postStatus, daysAgo).map { it.toResponse() }
     }
 
-    //제목으로 검색
+    //글 목록 조회 - 제목 기준
     override fun getPostListByTitle(title: String): List<PostResponse> {
         return postRepository.searchPostListByTitle(title).map { it.toResponse() }
     }
 
-    //생성날짜 기준 정렬
+    //글 목록 조회 - 생성날짜 기준
     override fun getPostListByCreatedAt(): List<PostResponse> {
         return postRepository.searchPostListByCreatedAt().map { it.toResponse() }
     }

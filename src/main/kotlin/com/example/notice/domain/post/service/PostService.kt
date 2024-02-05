@@ -21,7 +21,7 @@ interface PostService {
 
     fun deletePost(postId: Long, userPrincipal: UserPrincipal)
 
-    fun getPostListPaginated(pageable: Pageable, status: String?): Page<PostResponse>
+    fun getPostListPaginated(pageable: Pageable, status: String?, daysAgo: Long?): Page<PostResponse>
 
     fun getPostListByTitle(title: String): List<PostResponse>
 
