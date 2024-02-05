@@ -51,7 +51,6 @@ fun PostEntity.toResponse(): PostResponse {
         description = description,
         status = status,
         postImageUrl = postImageUrl,
-        comments = comments.map { it.toResponse() }
     )
 }
 

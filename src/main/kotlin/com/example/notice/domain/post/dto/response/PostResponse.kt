@@ -14,6 +14,5 @@ data class PostResponse (
     val postImageUrl: String,
     val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime = LocalDateTime.now(),
-    val comments: List<CommentResponse>
 )
 
