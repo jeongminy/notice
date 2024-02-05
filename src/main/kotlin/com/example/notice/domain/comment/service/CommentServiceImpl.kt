@@ -58,7 +58,7 @@ class CommentServiceImpl(
 
         comment.comment = request.comment
 
-        return comment.toResponse()
+        return commentRepository.save(comment).toResponse()
     }
 
     override fun deleteComment(postId: Long, commentId: Long, userPrincipal: UserPrincipal) {

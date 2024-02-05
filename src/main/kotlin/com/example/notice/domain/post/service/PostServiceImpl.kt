@@ -87,7 +87,7 @@ class PostServiceImpl(
             post.postImageUrl = request.postImageUrl
             post.updatedAt = LocalDateTime.now()
 
-        return post.toResponse()
+        return postRepository.save(post).toResponse()
     }
 
     override fun deletePost(
