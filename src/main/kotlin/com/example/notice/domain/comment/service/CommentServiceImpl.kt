@@ -67,7 +67,7 @@ class CommentServiceImpl(
         comment.comment = request.comment
         comment.updatedAt = LocalDateTime.now()
 
-        return commentRepository.save(comment).toResponse()
+        return comment.toResponse()
     }
 
     @Transactional

@@ -91,7 +91,7 @@ class PostServiceImpl(
             post.postImageUrl = request.postImageUrl
             post.updatedAt = LocalDateTime.now()
 
-        return postRepository.save(post).toResponse()
+        return post.toResponse()
     }
 
     @Transactional
