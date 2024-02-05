@@ -27,10 +27,10 @@ class CommentEntity (
     val id: Long? = null
 
     @Column(name = "created_at")
-    val createdAt: LocalDateTime? = LocalDateTime.now()
+    val createdAt: LocalDateTime = LocalDateTime.now()
 
     @Column(name = "updated_at")
-    var updatedAt: LocalDateTime? = LocalDateTime.now()
+    var updatedAt: LocalDateTime = LocalDateTime.now()
 }
 
 fun CommentEntity.toResponse(): CommentResponse{
@@ -38,5 +38,7 @@ fun CommentEntity.toResponse(): CommentResponse{
         id = id!!,
         nickname = user.profile.nickname,
         comment = comment,
+        createdAt = createdAt,
+        updatedAt = updatedAt
         )
 }

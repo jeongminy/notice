@@ -13,8 +13,8 @@ data class PostByIdResponse (
     val postImageUrl: String,
     val likeCount: Int,
     val likedByCurrentUser: Boolean,
-    val createdAt: LocalDateTime = LocalDateTime.now(),
-    val updatedAt: LocalDateTime = LocalDateTime.now(),
+    val createdAt: LocalDateTime,
+    val updatedAt: LocalDateTime,
     val comments: List<CommentResponse>
 )
 

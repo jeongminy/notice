@@ -3,6 +3,7 @@ package com.example.notice.domain.post.model
 import com.example.notice.domain.comment.model.CommentEntity
 import com.example.notice.domain.comment.model.toResponse
 import com.example.notice.domain.post.dto.response.PostResponse
+import com.example.notice.domain.post.model.QPostEntity.postEntity
 import com.example.notice.domain.user.model.UserEntity
 import jakarta.persistence.*
 import java.time.LocalDateTime
@@ -37,10 +38,10 @@ class PostEntity (
     var id: Long? = null
 
     @Column(name = "created_at")
-    val createdAt: LocalDateTime? = LocalDateTime.now()
+    val createdAt: LocalDateTime = LocalDateTime.now()
 
     @Column(name = "updated_at")
-    var updatedAt: LocalDateTime? = LocalDateTime.now()
+    var updatedAt: LocalDateTime = LocalDateTime.now()
 }
 
 fun PostEntity.toResponse(): PostResponse {
@@ -51,6 +52,8 @@ fun PostEntity.toResponse(): PostResponse {
         description = description,
         status = status,
         postImageUrl = postImageUrl,
+        createdAt = createdAt,
+        updatedAt = updatedAt
     )
 }
 
