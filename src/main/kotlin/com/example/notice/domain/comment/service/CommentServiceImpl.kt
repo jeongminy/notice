@@ -15,6 +15,7 @@ import com.example.notice.domain.user.repository.UserRepository
 import com.example.notice.infra.security.UserPrincipal
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
 @Service
@@ -28,6 +29,7 @@ class CommentServiceImpl(
         return commentRepository.findAll().map { it.toResponse() }
     }
 
+    @Transactional
     override fun addComment(
         postId: Long,
         request: AddCommentRequest,
@@ -43,6 +45,7 @@ class CommentServiceImpl(
         return commentRepository.save(comment).toResponse()
     }
 
+    @Transactional
     override fun updateComment(
         postId: Long,
         commentId: Long,
@@ -63,6 +66,7 @@ class CommentServiceImpl(
         return commentRepository.save(comment).toResponse()
     }
 
+    @Transactional
     override fun deleteComment(postId: Long, commentId: Long, userPrincipal: UserPrincipal) {
         val post: PostEntity = postRepository.findByIdOrNull(postId) ?: throw ModelNotFoundException("Post", postId)
         val user:UserEntity = userRepository.findByIdOrNull(userPrincipal.id) ?: throw ModelNotFoundException("UserEntity", userPrincipal.id)

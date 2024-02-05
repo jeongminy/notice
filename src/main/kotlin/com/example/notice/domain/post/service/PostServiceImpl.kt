@@ -18,6 +18,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
 
@@ -52,6 +53,7 @@ class PostServiceImpl(
         )
     }
 
+    @Transactional
     override fun addPost(
         request: AddPostRequest,
         userPrincipal: UserPrincipal
@@ -69,6 +71,7 @@ class PostServiceImpl(
         ).toResponse()
     }
 
+    @Transactional
     override fun updatePost(
         postId: Long,
         request: UpdatePostRequest,
@@ -90,6 +93,7 @@ class PostServiceImpl(
         return postRepository.save(post).toResponse()
     }
 
+    @Transactional
     override fun deletePost(
         postId: Long,
         userPrincipal: UserPrincipal) {
