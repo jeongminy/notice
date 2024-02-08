@@ -20,6 +20,7 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import org.springframework.web.multipart.MultipartFile
 import java.time.LocalDateTime
 
 
@@ -56,6 +57,7 @@ class PostServiceImpl(
 
     @Transactional
     override fun addPost(
+        image: String,
         request: AddPostRequest,
         userPrincipal: UserPrincipal
     ): PostResponse {
@@ -66,7 +68,7 @@ class PostServiceImpl(
                 title = request.title,
                 description = request.description,
                 status = PostStatus.UNCOMPLETE,
-                postImageUrl = request.postImageUrl,
+                postImageUrl = image,
                 user = user
             )
         ).toResponse()

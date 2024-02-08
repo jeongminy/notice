@@ -5,6 +5,7 @@ import com.example.notice.domain.post.dto.request.UpdatePostRequest
 import com.example.notice.domain.post.dto.response.PostByIdResponse
 import com.example.notice.domain.post.dto.response.PostResponse
 import com.example.notice.domain.post.service.PostService
+import com.example.notice.infra.aws.S3Service
 import com.example.notice.infra.security.UserPrincipal
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -14,17 +15,20 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
 import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.http.HttpStatus
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
-import java.time.LocalDateTime
+import org.springframework.web.multipart.MultipartFile
+
 
 @Tag(name = "post", description = "글")
 @RequestMapping("/api/posts")
 @RestController
 class PostController(
     private val postService: PostService,
+    private val s3Service: S3Service,
 ) {
 
     @Operation(summary = "글 전체 조회")
@@ -48,14 +52,19 @@ class PostController(
 
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     @Operation(summary = "글 생성")
-    @PostMapping
+    @PostMapping(
+        consumes = [MediaType.MULTIPART_FORM_DATA_VALUE],
+        produces = [MediaType.APPLICATION_JSON_VALUE])
     fun addPost(
-        @Valid @RequestBody addPostRequest: AddPostRequest,
+        @RequestPart(required = false) multipartFile: MultipartFile?,
+        @Valid @RequestPart addPostRequest: AddPostRequest,
         @AuthenticationPrincipal userPrincipal: UserPrincipal,
     ): ResponseEntity<PostResponse>{
+
+        val image = multipartFile?.let { s3Service.upload(it) }
         return ResponseEntity
             .status(HttpStatus.CREATED)
-            .body(postService.addPost(addPostRequest, userPrincipal))
+            .body(image?.let { postService.addPost(it, addPostRequest, userPrincipal) })
     }
 
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
