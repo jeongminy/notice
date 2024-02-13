@@ -1,4 +1,4 @@
-package com.example.notice.feature.like.service
+package com.example.notice.domain.like.service
 
 import com.example.notice.infra.security.UserPrincipal
 

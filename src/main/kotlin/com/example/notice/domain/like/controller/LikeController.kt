@@ -1,6 +1,6 @@
-package com.example.notice.feature.like.controller
+package com.example.notice.domain.like.controller
 
-import com.example.notice.feature.like.service.LikeService
+import com.example.notice.domain.like.service.LikeService
 import com.example.notice.infra.security.UserPrincipal
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag

@@ -1,4 +1,4 @@
-package com.example.notice.feature.image.dto
+package com.example.notice.domain.image.dto
 
 data class UploadImageResponse(
     val url: String

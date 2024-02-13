@@ -1,4 +1,4 @@
-package com.example.notice.feature.email.utility
+package com.example.notice.domain.email.utility
 
 import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.mail.javamail.MimeMessageHelper

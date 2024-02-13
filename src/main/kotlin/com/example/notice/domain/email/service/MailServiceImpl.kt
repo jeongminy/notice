@@ -1,9 +1,9 @@
-package com.example.notice.feature.email.service
+package com.example.notice.domain.email.service
 
-import com.example.notice.feature.email.dto.MailResponse
-import com.example.notice.feature.email.model.MailEntity
-import com.example.notice.feature.email.repository.MailRepository
-import com.example.notice.feature.email.utility.MailUtility
+import com.example.notice.domain.email.dto.MailResponse
+import com.example.notice.domain.email.model.MailEntity
+import com.example.notice.domain.email.repository.MailRepository
+import com.example.notice.domain.email.utility.MailUtility
 import org.springframework.stereotype.Service
 
 @Service
