@@ -101,7 +101,7 @@ class PostController(
             .body(postService.getPostListByTitle(title))
     }
 
-    @Operation(summary = "글 목록 조회 - 페이지네이션")
+    @Operation(summary = "글 목록 조회 - 페이징 + 커스텀 정렬 + N일전 게시글 조회")
     @GetMapping("/page")
     fun getPostListPaginated(
         @PageableDefault(size = 15, sort = ["id"]) pageable: Pageable,

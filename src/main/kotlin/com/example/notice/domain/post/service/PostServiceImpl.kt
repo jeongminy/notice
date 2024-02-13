@@ -9,18 +9,16 @@ import com.example.notice.domain.post.dto.response.PostByIdResponse
 import com.example.notice.domain.post.dto.response.PostResponse
 import com.example.notice.domain.post.model.PostEntity
 import com.example.notice.domain.post.model.PostStatus
-import com.example.notice.domain.post.model.QPostEntity.postEntity
 import com.example.notice.domain.post.model.toResponse
 import com.example.notice.domain.post.repository.PostRepository
 import com.example.notice.domain.user.repository.UserRepository
-import com.example.notice.feature.like.service.LikeService
+import com.example.notice.domain.like.service.LikeService
 import com.example.notice.infra.security.UserPrincipal
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import org.springframework.web.multipart.MultipartFile
 import java.time.LocalDateTime
 
 
@@ -110,7 +108,7 @@ class PostServiceImpl(
         postRepository.delete(post)
     }
 
-    //글 목록 페이지네이션 - 페이징 + 커스텀 정렬 (id, title, nickname, description), N일전 게시글 조회
+    //글 목록 조회 - 페이징 + 커스텀 정렬 + N일전 게시글 조회 (동적쿼리)
     override fun getPostListPaginated(pageable: Pageable, status: String?, daysAgo: Long?): Page<PostResponse> {
         val postStatus = when (status) {
             "UNCOMPLETE" -> PostStatus.UNCOMPLETE
@@ -122,12 +120,12 @@ class PostServiceImpl(
         return postRepository.findByPageableAndStatus(pageable, postStatus, daysAgo).map { it.toResponse() }
     }
 
-    //글 목록 조회 - 제목 기준
+    //글 목록 조회 - 제목 검색
     override fun getPostListByTitle(title: String): List<PostResponse> {
         return postRepository.searchPostListByTitle(title).map { it.toResponse() }
     }
 
-    //글 목록 조회 - 생성날짜 기준
+    //글 목록 조회 - 생성날짜기준 내림차순
     override fun getPostListByCreatedAt(): List<PostResponse> {
         return postRepository.searchPostListByCreatedAt().map { it.toResponse() }
     }
