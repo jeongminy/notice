@@ -6,6 +6,7 @@ plugins {
 	kotlin("jvm") version "1.9.22"
 	kotlin("plugin.spring") version "1.9.22"
 	kotlin("plugin.noarg") version "1.8.22"
+	kotlin("plugin.allopen") version "1.8.22"
 	kotlin("kapt") version "1.8.22"
 }
 
@@ -28,6 +29,10 @@ repositories {
 
 val queryDslVersion = "5.0.0"
 
+val kotestVersion = "5.5.5"
+
+val mockkVersion = "1.13.8"
+
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -46,6 +51,12 @@ dependencies {
 	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.3") //JWT
 	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.3") //JWT
 	runtimeOnly("org.postgresql:postgresql") //postgresql
+	testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion") // test
+	testImplementation("io.kotest:kotest-assertions-core:$kotestVersion") // test
+	testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.3") // test
+	testImplementation("io.mockk:mockk:$mockkVersion") // test
+	testImplementation("org.postgresql:postgresql") // test
+
 
 
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
@@ -59,7 +70,7 @@ tasks.withType<KotlinCompile> {
 	}
 }
 
-tasks.withType<Test> {
+tasks.withType<Test>().configureEach() {
 	useJUnitPlatform()
 }
 
