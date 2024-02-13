@@ -46,11 +46,11 @@ class LikeServiceImpl(
 
     }
 
-    override fun countLikes(feedId: Long): Int { // 숫자
-        return likeRepository.countByPostId(feedId)
+    override fun countLikes(postId: Long): Int { // 숫자
+        return likeRepository.countByPostId(postId)
     }
 
-    override fun isLiked(memberId: Long, feedId: Long): Boolean{
-        return likeRepository.existsByUserIdAndPostId(memberId, feedId)
+    override fun isLiked(userId: Long, postId: Long): Boolean{
+        return likeRepository.existsByUserIdAndPostId(userId, postId)
     }
 }

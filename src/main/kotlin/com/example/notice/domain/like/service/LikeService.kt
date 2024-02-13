@@ -6,7 +6,7 @@ interface LikeService {
 
     fun like(userPrincipal: UserPrincipal, postId: Long): Boolean
 
-    fun countLikes(feedId: Long): Int
+    fun countLikes(postId: Long): Int
 
-    fun isLiked(userId: Long, feedId: Long): Boolean
+    fun isLiked(userId: Long, postId: Long): Boolean
 }

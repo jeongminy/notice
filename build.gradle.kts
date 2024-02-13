@@ -38,7 +38,7 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.springframework.boot:spring-boot-starter-mail") // verification email
-	implementation("org.springframework.cloud:spring-cloud-starter-aws:2.0.1.RELEASE") //aws
+	implementation("org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE") //aws
 	implementation("org.springframework.boot:spring-boot-starter-validation") //validation
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0") //swager
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa") //jpa
@@ -56,8 +56,7 @@ dependencies {
 	testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.3") // test
 	testImplementation("io.mockk:mockk:$mockkVersion") // test
 	testImplementation("org.postgresql:postgresql") // test
-
-
+	testImplementation("com.ninja-squad:springmockk:4.0.2")
 
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")

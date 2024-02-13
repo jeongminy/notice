@@ -35,6 +35,7 @@ class SecurityConfig(
             .httpBasic { it.disable() }
             .formLogin { it.disable() }
             .csrf { it.disable() }
+            .cors { it.disable() }
             .authorizeHttpRequests {
                 it.requestMatchers(*allowedUrls).permitAll()
                     .requestMatchers(*anonymousUrls).anonymous()
